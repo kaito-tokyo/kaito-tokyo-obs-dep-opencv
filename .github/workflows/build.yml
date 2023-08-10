@@ -55,8 +55,8 @@ jobs:
           name: "opencv-linux-${{ matrix.config }}"
           path: "release/opencv-linux-${{ matrix.config }}.tar.gz"
 
-  BuildLinux:
-    runs-on: "ubuntu-22.04"
+  BuildWindows:
+    runs-on: "windows-2022"
 
     strategy:
       matrix:
