@@ -75,4 +75,4 @@ cmake opencv -B build_$1 \
 
 cmake --build build_$1
 cmake --install build_$1 --prefix release/$1
-tar -C release/$1 -cvf release/opencv-linux-$1.tar.gz .
+tar -C release/$1 -cvf release/opencv-macos-$1.tar.gz .
