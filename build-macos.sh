@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 cmake opencv -G Ninja -B build_$1 \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=$1 \
