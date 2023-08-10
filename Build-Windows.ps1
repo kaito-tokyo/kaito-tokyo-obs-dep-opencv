@@ -71,7 +71,6 @@ cmake opencv -B build_$Config `
 
   ls build_$Config
   ls build_$Config\CMakeFiles
-Get-Content build_$Config\CMakeFiles\CMakeOutput.log
 Get-Content build_$Config\CMakeFiles\CMakeError.log
 
 cmake --build build_$Config
