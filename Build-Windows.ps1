@@ -1,7 +1,6 @@
-Param($Config)
+Param($Configuration)
 
-cmake opencv -B build_$Config `
-  -DCMAKE_BUILD_TYPE=${Config} `
+cmake opencv -B build_$Configuration `
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON `
   -DBUILD_SHARED_LIBS=OFF `
   -DBUILD_opencv_apps=OFF `
@@ -73,6 +72,6 @@ cmake opencv -B build_$Config `
   ls build_$Config\CMakeFiles
 Get-Content build_$Config\CMakeFiles\CMakeError.log
 
-cmake --build build_$Config
-cmake --install build_$Config --prefix release/$Config
-Compress-Archive release\$Config\* opencv-windows-$Config.zip -Verbose
+cmake --build build_$Configuration --config $Configuration
+cmake --install build_$Configuration --config $Configuration --prefix release/$Configuration
+Compress-Archive release\$Configuration\* opencv-windows-$Configuration.zip -Verbose
