@@ -69,6 +69,9 @@ cmake opencv -B build_$Config `
   -DWITH_OPENCL=OFF `
   -DWITH_IPP=OFF
 
+Get-Content build_$Config\CMakeFiles\CMakeOutput.log
+Get-Content build_$Config\CMakeFiles\CMakeError.log
+
 cmake --build build_$Config
 cmake --install build_$Config --prefix release/$Config
 Compress-Archive release\$Config\* opencv-windows-$Config.zip -Verbose
