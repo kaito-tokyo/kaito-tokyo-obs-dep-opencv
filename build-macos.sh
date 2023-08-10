@@ -158,4 +158,4 @@ for f in libopencv_core.a libopencv_features2d.a libopencv_imgcodecs.a libopencv
 do lipo -create release/$1/{x86_64,arm64}/lib/$f -output release/$1/universal/lib/$f
 done
 
-#tar -C release/$1 -cvf release/opencv-macos-$1.tar.gz .
+tar -C release/$1/universal -cvf release/opencv-macos-$1.tar.gz .
