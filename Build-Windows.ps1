@@ -2,7 +2,6 @@ Param($Config)
 
 cmake opencv -B build_$Config `
   -DCMAKE_BUILD_TYPE=$Config `
-  -DENABLE_CCACHE=ON `
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON `
   -DBUILD_SHARED_LIBS=OFF `
   -DBUILD_opencv_apps=OFF `

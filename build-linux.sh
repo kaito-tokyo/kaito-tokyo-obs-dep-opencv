@@ -4,7 +4,6 @@ set -euo pipefail
 cmake opencv -B build_$1 \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=$1 \
-  -DENABLE_CCACHE=ON \
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON \
   -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_opencv_apps=OFF \
