@@ -2,7 +2,7 @@
 set -euo pipefail
 
 cmake opencv -B build_$1 \
-  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_PREFIX=/usr/local \
   -DCMAKE_BUILD_TYPE=$1 \
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
