@@ -51,7 +51,7 @@ jobs:
           submodules: "recursive"
 
       - name: "Install ninja"
-        run: "sudo apt-get update && sudo apt-get -y install ninja"
+        run: "sudo apt-get update && sudo apt-get -y install ninja-build"
 
       - name: "Run build-linux.sh"
         run: "./build-linux.sh ${{ matrix.config }}"
