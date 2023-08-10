@@ -1,13 +1,10 @@
-#!/bin/bash
-set -euo pipefail
+Param($Config)
 
-cmake opencv -B build_$1 \
+cmake opencv -B build_$Config \
   -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_BUILD_TYPE=$1 \
+  -DCMAKE_BUILD_TYPE=$Config \
   -DENABLE_CCACHE=ON \
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON \
-  -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
-  -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
   -DBUILD_SHARED_LIBS=OFF \
   -DBUILD_opencv_apps=OFF \
   -DBUILD_opencv_js=OFF \
@@ -74,6 +71,6 @@ cmake opencv -B build_$1 \
   -DWITH_OPENCL=OFF \
   -DWITH_IPP=OFF
 
-cmake --build build_$1
-cmake --install build_$1 --prefix release/$1
-tar -C release/$1 -cvf release/opencv-macos-$1.tar.gz .
+cmake --build build_$Config
+cmake --install build_$Config --prefix release/$Config
+Compress-Archive release\$Config\* opencv-windows-$Config.zip -Verbose
