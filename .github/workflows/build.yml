@@ -14,10 +14,11 @@ jobs:
   BuildMac:
     runs-on: "macos-13"
 
-    matrix:
-      config:
-        - Debug
-        - Release
+    strategy:
+      matrix:
+        config:
+          - Debug
+          - Release
 
     steps:
       - uses: "actions/checkout@v3"
