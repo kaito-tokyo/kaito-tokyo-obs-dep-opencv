@@ -17,14 +17,14 @@ jobs:
     strategy:
       matrix:
         config:
-          - Debug
-          - Release
+          - "Debug"
+          - "Release"
 
     steps:
       - uses: "actions/checkout@v3"
         with:
           submodules: "recursive"
-      
+
       - name: "Install ninja"
         run: "brew install ninja"
 
@@ -35,6 +35,28 @@ jobs:
         with:
           name: "opencv-macos-${{ matrix.config }}"
           path: "release/opencv-macos-${{ matrix.config }}.tar.gz"
+
+  BuildLinux:
+    runs-on: "ubuntu-22.04"
+
+    strategy:
+      matrix:
+        config:
+          - "Debug"
+          - "Release"
+
+    steps:
+      - uses: "actions/checkout@v3"
+        with:
+          submodules: "recursive"
+
+      - name: "Run build-linux.sh"
+        run: "./build-linux.sh ${{ matrix.config }}"
+
+      - uses: "actions/upload-artifact@v3"
+        with:
+          name: "opencv-linux-${{ matrix.config }}"
+          path: "release/opencv-linux-${{ matrix.config }}.tar.gz"
 
   Release:
     runs-on: "ubuntu-22.04"
