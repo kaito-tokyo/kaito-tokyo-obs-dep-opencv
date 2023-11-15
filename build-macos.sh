@@ -1,9 +1,12 @@
 #!/bin/bash
 set -euo pipefail
 
-cmake opencv -B build_$1 \
+CONFIG="${1?}"
+VERSION="${2?}"
+
+cmake opencv -B "build_$CONFIG" \
   -DCMAKE_INSTALL_PREFIX=/usr/local \
-  -DCMAKE_BUILD_TYPE=$1 \
+  -DCMAKE_BUILD_TYPE="$CONFIG" \
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
   -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
@@ -73,6 +76,6 @@ cmake opencv -B build_$1 \
   -DWITH_OPENCL=OFF \
   -DWITH_IPP=OFF
 
-cmake --build build_$1
-cmake --install build_$1 --prefix release/$1
-tar -C release/$1 -cvf release/opencv-macos-$1.tar.gz .
+cmake --build "build_$CONFIG"
+cmake --install "build_$CONFIG" --prefix "release/$CONFIG"
+tar -C "release/$CONFIG" -cvf "release/opencv-macos-$VERSION-$CONFIG.tar.gz" .
