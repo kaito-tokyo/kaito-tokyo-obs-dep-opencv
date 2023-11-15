@@ -74,7 +74,8 @@ cmake opencv -B "build_$CONFIG" \
   -DWITH_ADE=OFF \
   -DWITH_ITT=OFF \
   -DWITH_OPENCL=OFF \
-  -DWITH_IPP=OFF
+  -DWITH_IPP=OFF \
+  -DENABLE_NEON=OFF
 
 cmake --build "build_$CONFIG"
 cmake --install "build_$CONFIG" --prefix "release/$CONFIG"
