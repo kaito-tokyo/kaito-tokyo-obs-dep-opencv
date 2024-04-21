@@ -1,6 +1,6 @@
-Param($Configuration, $Version)
+Param($Configuration, $Version, $OpenCVDirectory)
 
-cmake opencv -B build_$Configuration `
+cmake $OpenCVDirectory -B build_$Configuration `
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON `
   -DBUILD_SHARED_LIBS=OFF `
   -DBUILD_opencv_apps=OFF `
@@ -27,46 +27,7 @@ cmake opencv -B build_$Configuration `
   -DINSTALL_PYTHON_EXAMPLES=OFF `
   -DINSTALL_ANDROID_EXAMPLES=OFF `
   -DINSTALL_TO_MANGLED_PATHS=OFF `
-  -DINSTALL_TESTS=OFF `
-  -DBUILD_opencv_calib3d=OFF `
-  -DBUILD_opencv_core=ON `
-  -DBUILD_opencv_dnn=OFF `
-  -DBUILD_opencv_features2d=ON `
-  -DBUILD_opencv_flann=OFF `
-  -DBUILD_opencv_gapi=OFF `
-  -DBUILD_opencv_highgui=OFF `
-  -DBUILD_opencv_imgcodecs=ON `
-  -DBUILD_opencv_imgproc=ON `
-  -DBUILD_opencv_ml=OFF `
-  -DBUILD_opencv_objdetect=OFF `
-  -DBUILD_opencv_photo=OFF `
-  -DBUILD_opencv_stitching=OFF `
-  -DBUILD_opencv_video=OFF `
-  -DBUILD_opencv_videoio=OFF `
-  -DWITH_PNG=ON `
-  -DWITH_JPEG=OFF `
-  -DWITH_TIFF=OFF `
-  -DWITH_WEBP=OFF `
-  -DWITH_OPENJPEG=OFF `
-  -DWITH_JASPER=OFF `
-  -DWITH_OPENEXR=OFF `
-  -DWITH_FFMPEG=OFF `
-  -DWITH_GSTREAMER=OFF `
-  -DWITH_1394=OFF `
-  -DWITH_PROTOBUF=OFF `
-  -DBUILD_PROTOBUF=OFF `
-  -DWITH_CAROTENE=OFF `
-  -DWITH_EIGEN=OFF `
-  -DWITH_OPENVX=OFF `
-  -DWITH_CLP=OFF `
-  -DWITH_DIRECTX=OFF `
-  -DWITH_VA=OFF `
-  -DWITH_LAPACK=OFF `
-  -DWITH_QUIRC=OFF `
-  -DWITH_ADE=OFF `
-  -DWITH_ITT=OFF `
-  -DWITH_OPENCL=OFF `
-  -DWITH_IPP=OFF
+  -DINSTALL_TESTS=OFF
 
 cmake --build build_$Configuration --config $Configuration
 cmake --install build_$Configuration --config $Configuration --prefix release/$Configuration
