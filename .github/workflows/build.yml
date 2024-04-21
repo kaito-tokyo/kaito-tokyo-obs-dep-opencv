@@ -80,6 +80,11 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v4"
 
+      - name: "Download and extract OpenCV"
+        run: |
+          curl -fssLO "https://github.com/opencv/opencv/archive/refs/tags/$OPENCV_VERSION.tar.gz"
+          tar -xf "$OPENCV_VERSION.tar.gz"
+
       - name: "Run build-linux.sh"
         run: './build-linux.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }} "opencv-$OPENCV_VERSION"'
 
@@ -111,8 +116,13 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v4"
 
+      - name: "Download and extract OpenCV"
+        run: |
+          Invoke-WebRequest -Uri https://github.com/opencv/opencv/archive/refs/tags/$Env:OPENCV_VERSION.zip -OutFile "$Env:OPENCV_VERSION.zip"
+          Expand-Archive -Path "$Env:OPENCV_VERSION.zip" -DestinationPath "."
+
       - name: "Run Build-Windows.ps1"
-        run: "./Build-Windows.ps1 -Configuration ${{ matrix.config }} -Version ${{ steps.get-version.outputs.version }} -OpenCVDirectory opencv-${{ env.OPENCV_VERSION }}"
+        run: './Build-Windows.ps1 -Configuration "${{ matrix.config }}" -Version "${{ steps.get-version.outputs.version }}" -OpenCVDirectory "opencv-$Env:OPENCV_VERSION"'
 
       - uses: "actions/upload-artifact@v3"
         with:
