@@ -77,9 +77,8 @@ jobs:
           printf "version=%s" "$version" > "$GITHUB_OUTPUT"
         id: "get-version"
 
-      - uses: "actions/checkout@v4"
-        with:
-          submodules: "recursive"
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
 
       - name: "Run build-linux.sh"
         run: './build-linux.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }} "opencv-$OPENCV_VERSION"'
@@ -109,9 +108,8 @@ jobs:
           printf "version=%s" "$version" > "$GITHUB_OUTPUT"
         id: "get-version"
 
-      - uses: "actions/checkout@v4"
-        with:
-          submodules: "recursive"
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
 
       - name: "Run Build-Windows.ps1"
         run: "./Build-Windows.ps1 -Configuration ${{ matrix.config }} -Version ${{ steps.get-version.outputs.version }} -OpenCVDirectory opencv-${{ env.OPENCV_VERSION }}"
