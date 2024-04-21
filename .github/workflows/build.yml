@@ -11,6 +11,10 @@ name: "build"
     branches:
       - "main"
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: "${{ github.ref != 'refs/heads/main' }}"
+
 env:
   OPENCV_VERSION: "4.9.0"
 
