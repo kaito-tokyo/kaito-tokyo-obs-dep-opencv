@@ -1,6 +1,7 @@
-name: "Build"
+---
+name: "build"
 
-on:
+"on":
   push:
     branches:
       - "main"
@@ -10,9 +11,16 @@ on:
     branches:
       - "main"
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: "${{ github.ref != 'refs/heads/main' }}"
+
+env:
+  OPENCV_VERSION: "4.9.0"
+
 jobs:
   BuildMac:
-    runs-on: "macos-13"
+    runs-on: "macos-14"
 
     strategy:
       matrix:
@@ -34,14 +42,18 @@ jobs:
           printf "version=%s" "$version" > "$GITHUB_OUTPUT"
         id: "get-version"
 
-      - uses: "actions/checkout@v4"
-        with:
-          submodules: "recursive"
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Download and extract OpenCV"
+        run: |
+          curl -fssLO "https://github.com/opencv/opencv/archive/refs/tags/$OPENCV_VERSION.tar.gz"
+          tar -xf "$OPENCV_VERSION.tar.gz"
 
       - name: "Run build-macos.sh"
-        run: "./build-macos.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }}"
+        run: './build-macos.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }} "opencv-$OPENCV_VERSION"'
 
-      - uses: "actions/upload-artifact@v3"
+      - uses: "actions/upload-artifact@v4"
         with:
           name: "opencv-macos-${{ matrix.config }}"
           path: "release/*.tar.gz"
@@ -69,14 +81,18 @@ jobs:
           printf "version=%s" "$version" > "$GITHUB_OUTPUT"
         id: "get-version"
 
-      - uses: "actions/checkout@v4"
-        with:
-          submodules: "recursive"
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Download and extract OpenCV"
+        run: |
+          curl -fssLO "https://github.com/opencv/opencv/archive/refs/tags/$OPENCV_VERSION.tar.gz"
+          tar -xf "$OPENCV_VERSION.tar.gz"
 
       - name: "Run build-linux.sh"
-        run: "./build-linux.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }}"
+        run: './build-linux.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }} "opencv-$OPENCV_VERSION"'
 
-      - uses: "actions/upload-artifact@v3"
+      - uses: "actions/upload-artifact@v4"
         with:
           name: "opencv-linux-${{ matrix.config }}"
           path: "release/*.tar.gz"
@@ -101,12 +117,16 @@ jobs:
           printf "version=%s" "$version" > "$GITHUB_OUTPUT"
         id: "get-version"
 
-      - uses: "actions/checkout@v4"
-        with:
-          submodules: "recursive"
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Download and extract OpenCV"
+        run: |
+          Invoke-WebRequest -Uri https://github.com/opencv/opencv/archive/refs/tags/$Env:OPENCV_VERSION.zip -OutFile "$Env:OPENCV_VERSION.zip"
+          Expand-Archive -Path "$Env:OPENCV_VERSION.zip" -DestinationPath "."
 
       - name: "Run Build-Windows.ps1"
-        run: "./Build-Windows.ps1 -Configuration ${{ matrix.config }} -Version ${{ steps.get-version.outputs.version }}"
+        run: './Build-Windows.ps1 -Configuration "${{ matrix.config }}" -Version "${{ steps.get-version.outputs.version }}" -OpenCVDirectory "opencv-$Env:OPENCV_VERSION"'
 
       - uses: "actions/upload-artifact@v3"
         with:
@@ -142,10 +162,10 @@ jobs:
         id: "get-version"
 
       - name: "Download build artifacts"
-        uses: "actions/download-artifact@v3"
+        uses: "actions/download-artifact@v4"
 
       - name: "Create Release"
-        uses: "softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5"
+        uses: "softprops/action-gh-release@d4e8205d7e959a9107da6396278b2f1f07af0f9b"
         with:
           draft: true
           tag_name: "${{ steps.get-version.outputs.version }}"

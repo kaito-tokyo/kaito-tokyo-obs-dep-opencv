@@ -3,10 +3,11 @@ set -euo pipefail
 
 CONFIG="${1?}"
 VERSION="${2?}"
+OPENCV_DIR="${3?}"
+ 
+#git apply macos-4.8.1.patch || true
 
-git apply macos-4.8.1.patch || true
-
-cmake opencv -B "build_$CONFIG" \
+cmake "$OPENCV_DIR" -B "build_$CONFIG" \
   -DCMAKE_INSTALL_PREFIX=/usr/local \
   -DCMAKE_BUILD_TYPE="$CONFIG" \
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON \

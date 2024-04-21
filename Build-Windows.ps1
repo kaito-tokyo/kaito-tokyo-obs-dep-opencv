@@ -1,6 +1,6 @@
-Param($Configuration, $Version)
+Param($Configuration, $Version, $OpenCVDirectory)
 
-cmake opencv -B build_$Configuration `
+cmake $OpenCVDirectory -B build_$Configuration `
   -DOPENCV_FORCE_3RDPARTY_BUILD=ON `
   -DBUILD_SHARED_LIBS=OFF `
   -DBUILD_opencv_apps=OFF `
