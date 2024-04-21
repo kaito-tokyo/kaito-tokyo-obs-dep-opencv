@@ -53,7 +53,8 @@ jobs:
       - name: "Run build-macos.sh"
         run: './build-macos.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }} "opencv-$OPENCV_VERSION"'
 
-      - uses: "actions/upload-artifact@v4"
+      - name: "Upload artifacts"
+        uses: "actions/upload-artifact@v4"
         with:
           name: "opencv-macos-${{ matrix.config }}"
           path: "release/*.tar.gz"
@@ -92,7 +93,8 @@ jobs:
       - name: "Run build-linux.sh"
         run: './build-linux.sh ${{ matrix.config }} ${{ steps.get-version.outputs.version }} "opencv-$OPENCV_VERSION"'
 
-      - uses: "actions/upload-artifact@v4"
+      - name: "Upload artifacts"
+        uses: "actions/upload-artifact@v4"
         with:
           name: "opencv-linux-${{ matrix.config }}"
           path: "release/*.tar.gz"
@@ -128,7 +130,8 @@ jobs:
       - name: "Run Build-Windows.ps1"
         run: './Build-Windows.ps1 -Configuration "${{ matrix.config }}" -Version "${{ steps.get-version.outputs.version }}" -OpenCVDirectory "opencv-$Env:OPENCV_VERSION"'
 
-      - uses: "actions/upload-artifact@v4"
+      - name: "Upload artifacts"
+        uses: "actions/upload-artifact@v4"
         with:
           name: "opencv-windows-${{ matrix.config }}"
           path: "release/*.zip"
